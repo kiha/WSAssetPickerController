@@ -18,6 +18,7 @@
 //  limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @protocol WSAssetPickerControllerDelegate;
 
@@ -31,6 +32,7 @@
 
 // Designated initializer.
 - (id)initWithDelegate:(id<WSAssetPickerControllerDelegate>)delegate;
+- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(ALAssetsFilter*)filter;
 
 @end
 

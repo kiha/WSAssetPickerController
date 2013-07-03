@@ -59,6 +59,22 @@
     return self;
 }
 
+- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(ALAssetsFilter*)filter; {
+  // Create the Album TableView Controller.
+  WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
+  albumTableViewController.assetPickerState = self.assetPickerState;
+  albumTableViewController.filter = filter;
+  
+  if ((self = [super initWithRootViewController:albumTableViewController])) {
+    
+    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    self.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    self.delegate = delegate;
+  }
+  
+  return self;
+}
+
 #pragma mark - Accessors -
 
 - (WSAssetPickerState *)assetPickerState

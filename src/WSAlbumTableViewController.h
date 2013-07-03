@@ -19,8 +19,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class WSAssetPickerState;
+@class WSAssetPickerState,ALAssetsFilter;
 
 @interface WSAlbumTableViewController : UITableViewController
 @property (nonatomic, weak) WSAssetPickerState *assetPickerState;
+@property (nonatomic,strong) ALAssetsFilter *filter;
+
 @end

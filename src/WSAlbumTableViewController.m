@@ -34,6 +34,7 @@
 @synthesize assetPickerState = _assetPickerState;
 @synthesize assetsLibrary = _assetsLibrary;
 @synthesize assetGroups = _assetGroups;
+@synthesize filter = _filter;
 
 
 #pragma mark - Getters 
@@ -137,7 +138,7 @@
     
     // Get the group from the datasource.
     ALAssetsGroup *group = [self.assetGroups objectAtIndex:indexPath.row];
-    [group setAssetsFilter:[ALAssetsFilter allPhotos]]; // TODO: Make this a delegate choice.
+    [group setAssetsFilter:_filter]; // TODO: Make this a delegate choice.
     
     // Setup the cell.
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)", [group valueForProperty:ALAssetsGroupPropertyName], [group numberOfAssets]];
@@ -153,7 +154,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ALAssetsGroup *group = [self.assetGroups objectAtIndex:indexPath.row];
-    [group setAssetsFilter:[ALAssetsFilter allPhotos]]; // TODO: Make this a delegate choice.
+    [group setAssetsFilter:_filter]; // TODO: Make this a delegate choice.
     
     WSAssetTableViewController *assetTableViewController = [[WSAssetTableViewController alloc] initWithStyle:UITableViewStylePlain];
     assetTableViewController.assetPickerState = self.assetPickerState;
