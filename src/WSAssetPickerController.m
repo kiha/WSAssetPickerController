@@ -59,17 +59,21 @@
     return self;
 }
 
-- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(ALAssetsFilter*)filter; {
+- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(AROAssetsFilter)filter; {
   // Create the Album TableView Controller.
   WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
   albumTableViewController.assetPickerState = self.assetPickerState;
-  albumTableViewController.filter = filter;
+  albumTableViewController.filter = [WSAssetPickerController ALAssetsFilterFromAROFilter:filter];
   
   if ((self = [super initWithRootViewController:albumTableViewController])) {
     
     self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.toolbar.barStyle = UIBarStyleBlackTranslucent;
     self.delegate = delegate;
+    
+    if (filter == AROAssetsFilterAllVideos) {
+      [self setSelectionLimit:1];
+    }
   }
   
   return self;
@@ -157,6 +161,23 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
++ (ALAssetsFilter*)ALAssetsFilterFromAROFilter:(AROAssetsFilter)filter;
+{
+  ALAssetsFilter *f = nil;
+  switch (filter) {
+    case AROAssetsFilterAllPhotos:
+      f = [ALAssetsFilter allPhotos];
+      break;
+    case AROAssetsFilterAllVideos:
+      f = [ALAssetsFilter allVideos];
+      break;
+    case AROAssetsFilterAllAssets:
+      f = [ALAssetsFilter allAssets];
+      break;
+  }
+  return f;
 }
 
 @end

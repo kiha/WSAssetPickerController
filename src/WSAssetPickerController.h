@@ -20,6 +20,12 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+typedef enum {
+  AROAssetsFilterAllPhotos=0,
+  AROAssetsFilterAllVideos,
+  AROAssetsFilterAllAssets
+} AROAssetsFilter;
+
 @protocol WSAssetPickerControllerDelegate;
 
 @interface WSAssetPickerController : UINavigationController
@@ -32,7 +38,7 @@
 
 // Designated initializer.
 - (id)initWithDelegate:(id<WSAssetPickerControllerDelegate>)delegate;
-- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(ALAssetsFilter*)filter;
+- (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(AROAssetsFilter)filter;
 
 @end
 
