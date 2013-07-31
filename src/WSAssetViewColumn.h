@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class ALAsset;
+
 @interface WSAssetViewColumn : UIView
 
 @property (nonatomic) NSUInteger column;
@@ -27,6 +29,7 @@
 + (WSAssetViewColumn *)assetViewWithImage:(UIImage *)thumbnail;
 
 - (id)initWithImage:(UIImage *)thumbnail;
+- (id)initWithAsset:(ALAsset *)asset;
 
 - (void)setShouldSelectItemBlock:(BOOL(^)(NSInteger column))shouldSelectItemBlock;
 

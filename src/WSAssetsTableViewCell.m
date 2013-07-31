@@ -82,9 +82,8 @@
     // Create new WSAssetViews
     NSMutableArray *columns = [NSMutableArray arrayWithCapacity:[assets count]];
     
-    for (WSAssetWrapper *assetWrapper in assets) {
-        
-        WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithImage:[UIImage imageWithCGImage:assetWrapper.asset.thumbnail]];
+    for (WSAssetWrapper *assetWrapper in assets) {        
+        WSAssetViewColumn *assetViewColumn = [[WSAssetViewColumn alloc] initWithAsset:assetWrapper.asset];
         assetViewColumn.column = [assets indexOfObject:assetWrapper];
         assetViewColumn.selected = assetWrapper.isSelected;
         
