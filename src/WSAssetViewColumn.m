@@ -119,7 +119,14 @@
                                                (bar.frame.size.height - durationLabel.frame.size.height) / 2.0f);
       durationLabel.frame = durationLabelFrame;
       
+      UIImage *videoIcon = [UIImage imageNamed:@"icon_video"];
+      UIImageView *viewIconView = [[UIImageView alloc] initWithImage:videoIcon];
+      CGRect videoIconViewFrame = viewIconView.frame;
+      videoIconViewFrame.origin = CGPointMake(padding, (bar.frame.size.height - videoIconViewFrame.size.height) / 2.0f);
+      viewIconView.frame = videoIconViewFrame;
+      
       [bar addSubview:durationLabel];
+      [bar addSubview:viewIconView];
     }
   }
   return self;
