@@ -89,39 +89,44 @@
             });
             return;
         }
-        
-        // Add the group to the array.
-        NSUInteger insertIndex = [self.assetGroups indexOfObject:group inSortedRange:NSMakeRange(0, self.assetGroups.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
-          ALAssetsGroup *group1 = obj1;
-          ALAssetsGroup *group2 = obj2;
-          
-          NSString *name1 = [group1 valueForProperty:ALAssetsGroupPropertyName];
-          NSString *name2 = [group2 valueForProperty:ALAssetsGroupPropertyName];
-          
-          NSComparisonResult result = [name1 compare:name2];
-          
-          if (result != NSOrderedSame)
-          {
-            NSNumber *groupTypeNumber1 = [group1 valueForProperty:ALAssetsGroupPropertyType];
-            ALAssetsGroupType groupType1 = [groupTypeNumber1 unsignedIntegerValue];
+      
+        [group setAssetsFilter:self.filter];
+        BOOL addItem = !self.hideAlbumsWithNoAssets || (self.hideAlbumsWithNoAssets && [group numberOfAssets] > 0);
+        if (addItem)
+        {
+          // Add the group to the array.
+          NSUInteger insertIndex = [self.assetGroups indexOfObject:group inSortedRange:NSMakeRange(0, self.assetGroups.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(id obj1, id obj2) {
+            ALAssetsGroup *group1 = obj1;
+            ALAssetsGroup *group2 = obj2;
             
-            NSNumber *groupTypeNumber2 = [group2 valueForProperty:ALAssetsGroupPropertyType];
-            ALAssetsGroupType groupType2 = [groupTypeNumber2 unsignedIntegerValue];
+            NSString *name1 = [group1 valueForProperty:ALAssetsGroupPropertyName];
+            NSString *name2 = [group2 valueForProperty:ALAssetsGroupPropertyName];
             
-            if (groupType1 == ALAssetsGroupSavedPhotos)
+            NSComparisonResult result = [name1 compare:name2];
+            
+            if (result != NSOrderedSame)
             {
-              result = NSOrderedAscending;
+              NSNumber *groupTypeNumber1 = [group1 valueForProperty:ALAssetsGroupPropertyType];
+              ALAssetsGroupType groupType1 = [groupTypeNumber1 unsignedIntegerValue];
+              
+              NSNumber *groupTypeNumber2 = [group2 valueForProperty:ALAssetsGroupPropertyType];
+              ALAssetsGroupType groupType2 = [groupTypeNumber2 unsignedIntegerValue];
+              
+              if (groupType1 == ALAssetsGroupSavedPhotos)
+              {
+                result = NSOrderedAscending;
+              }
+              else if (groupType2 == ALAssetsGroupSavedPhotos)
+              {
+                result = NSOrderedDescending;
+              }
             }
-            else if (groupType2 == ALAssetsGroupSavedPhotos)
-            {
-              result = NSOrderedDescending;
-            }
-          }
-          
-          return result;
-        }];
-        [self.assetGroups insertObject:group atIndex:insertIndex];
-        
+            
+            return result;
+          }];
+          [self.assetGroups insertObject:group atIndex:insertIndex];
+        }
+      
         // Reload the tableview on the main thread.
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];

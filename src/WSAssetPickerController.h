@@ -33,6 +33,8 @@ typedef enum {
 @property (nonatomic, readonly) NSArray *selectedAssets;
 @property (nonatomic, readonly) NSUInteger selectedCount; // Observable via key-value observing.
 
+@property (nonatomic, assign) BOOL hideAlbumsWithNoAssets;
+
 // Limit the number of assets that can be selected.
 @property (nonatomic, readwrite) NSInteger selectionLimit;
 

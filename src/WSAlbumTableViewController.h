@@ -24,5 +24,6 @@
 @interface WSAlbumTableViewController : UITableViewController
 @property (nonatomic, weak) WSAssetPickerState *assetPickerState;
 @property (nonatomic,strong) ALAssetsFilter *filter;
+@property (nonatomic, assign) BOOL hideAlbumsWithNoAssets;
 
 @end

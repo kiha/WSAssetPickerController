@@ -48,7 +48,8 @@
     // Create the Album TableView Controller.
     WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
     albumTableViewController.assetPickerState = self.assetPickerState;
-    
+    albumTableViewController.hideAlbumsWithNoAssets = self.hideAlbumsWithNoAssets;
+  
     if ((self = [super initWithRootViewController:albumTableViewController])) {
         
         self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
@@ -64,6 +65,7 @@
   WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
   albumTableViewController.assetPickerState = self.assetPickerState;
   albumTableViewController.filter = [WSAssetPickerController ALAssetsFilterFromAROFilter:filter];
+  albumTableViewController.hideAlbumsWithNoAssets = self.hideAlbumsWithNoAssets;
   
   if ((self = [super initWithRootViewController:albumTableViewController])) {
     
@@ -77,6 +79,19 @@
   }
   
   return self;
+}
+
+- (void)setHideAlbumsWithNoAssets:(BOOL)hideAlbumsWithNoAssets
+{
+  _hideAlbumsWithNoAssets = hideAlbumsWithNoAssets;
+  
+  for (UIViewController *viewController in self.viewControllers)
+  {
+    if ([viewController isKindOfClass:[WSAssetPickerController class]] || [viewController isKindOfClass:[WSAlbumTableViewController class]])
+    {
+      [(id)viewController setHideAlbumsWithNoAssets:hideAlbumsWithNoAssets];
+    }
+  }
 }
 
 #pragma mark - Accessors -
