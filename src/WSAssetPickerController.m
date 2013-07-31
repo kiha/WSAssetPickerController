@@ -71,11 +71,7 @@
     
     self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.toolbar.barStyle = UIBarStyleBlackTranslucent;
-    self.delegate = delegate;
-    
-    if (filter == AROAssetsFilterAllVideos) {
-      [self setSelectionLimit:1];
-    }
+    self.delegate = delegate;    
   }
   
   return self;
