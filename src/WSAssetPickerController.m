@@ -28,7 +28,7 @@
 @interface WSAssetPickerController ()
 @property (nonatomic, strong) WSAssetPickerState *assetPickerState;
 @property (nonatomic, readwrite) NSUInteger selectedCount;
-@property (nonatomic) UIStatusBarStyle originalStatusBarStyle;
+//@property (nonatomic) UIStatusBarStyle originalStatusBarStyle;
 @end
 
 
@@ -38,26 +38,26 @@
 
 @synthesize assetPickerState = _assetPickerState;
 @synthesize selectedCount = _selectedCount;
-@synthesize originalStatusBarStyle = _originalStatusBarStyle;
+//@synthesize originalStatusBarStyle = _originalStatusBarStyle;
 
 
 #pragma mark - Initialization
 
 - (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate;
 {
-    // Create the Album TableView Controller.
-    WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    albumTableViewController.assetPickerState = self.assetPickerState;
-    albumTableViewController.hideAlbumsWithNoAssets = self.hideAlbumsWithNoAssets;
-  
-    if ((self = [super initWithRootViewController:albumTableViewController])) {
-        
-        self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-        self.toolbar.barStyle = UIBarStyleBlackTranslucent;
-        self.delegate = delegate;
-    }
-    
-    return self;
+  // Create the Album TableView Controller.
+  WSAlbumTableViewController *albumTableViewController = [[WSAlbumTableViewController alloc] initWithStyle:UITableViewStylePlain];
+  albumTableViewController.assetPickerState = self.assetPickerState;
+  albumTableViewController.hideAlbumsWithNoAssets = self.hideAlbumsWithNoAssets;
+
+  if ((self = [super initWithRootViewController:albumTableViewController])) {
+
+    //        self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    //        self.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    self.delegate = delegate;
+  }
+
+  return self;
 }
 
 - (id)initWithDelegate:(id <WSAssetPickerControllerDelegate>)delegate withFilter:(AROAssetsFilter)filter; {
@@ -66,21 +66,21 @@
   albumTableViewController.assetPickerState = self.assetPickerState;
   albumTableViewController.filter = [WSAssetPickerController ALAssetsFilterFromAROFilter:filter];
   albumTableViewController.hideAlbumsWithNoAssets = self.hideAlbumsWithNoAssets;
-  
+
   if ((self = [super initWithRootViewController:albumTableViewController])) {
-    
-    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    self.toolbar.barStyle = UIBarStyleBlackTranslucent;
-    self.delegate = delegate;    
+
+  //    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+  //    self.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    self.delegate = delegate;
   }
-  
+
   return self;
 }
 
 - (void)setHideAlbumsWithNoAssets:(BOOL)hideAlbumsWithNoAssets
 {
   _hideAlbumsWithNoAssets = hideAlbumsWithNoAssets;
-  
+
   for (UIViewController *viewController in self.viewControllers)
   {
     if ([viewController isKindOfClass:[WSAssetPickerController class]] || [viewController isKindOfClass:[WSAlbumTableViewController class]])
@@ -118,11 +118,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    self.originalStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
-    
+
+//    self.originalStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
+//
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+
     // Start observing state changes and selectedCount changes.
     [_assetPickerState addObserver:self forKeyPath:STATE_KEY options:NSKeyValueObservingOptionNew context:NULL];
     [_assetPickerState addObserver:self forKeyPath:SELECTED_COUNT_KEY options:NSKeyValueObservingOptionNew context:NULL];
@@ -131,8 +131,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:self.originalStatusBarStyle animated:YES];
+
+//    [[UIApplication sharedApplication] setStatusBarStyle:self.originalStatusBarStyle animated:YES];
     
     // Stop observing state changes and selectedCount changes.
     [_assetPickerState removeObserver:self forKeyPath:STATE_KEY];
