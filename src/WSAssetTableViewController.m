@@ -100,7 +100,8 @@
 
 - (NSInteger)assetsPerRow
 {
-    return MAX(1, (NSInteger)floorf(self.tableView.contentSize.width / ASSET_WIDTH_WITH_PADDING));
+  NSInteger result = MAX(1, (NSInteger)floorf(self.tableView.bounds.size.width / ASSET_WIDTH_WITH_PADDING));
+  return result;
 }
 
 #pragma mark - Rotation
@@ -199,24 +200,31 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (self.fetchedAssets.count + self.assetsPerRow - 1) / self.assetsPerRow;
+  NSInteger result = (self.fetchedAssets.count + self.assetsPerRow - 1) / self.assetsPerRow;
+  return result;
 }
 
 - (NSArray *)assetsForIndexPath:(NSIndexPath *)indexPath
-{    
-    NSRange assetRange;
-    assetRange.location = indexPath.row * self.assetsPerRow;
-    assetRange.length = self.assetsPerRow;
-    
+{
+  NSArray *result = nil;
+  NSRange assetRange;
+  assetRange.location = indexPath.row * self.assetsPerRow;
+  assetRange.length = self.assetsPerRow;
+
+  if (assetRange.location < self.fetchedAssets.count)
+  {
     // Prevent the range from exceeding the array length.
     if (assetRange.length > self.fetchedAssets.count - assetRange.location) {
-        assetRange.length = self.fetchedAssets.count - assetRange.location;
+      assetRange.length = self.fetchedAssets.count - assetRange.location;
     }
-    
+
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:assetRange];
-    
+
     // Return the range of assets from fetchedAssets.
-    return [self.fetchedAssets objectsAtIndexes:indexSet];
+    result = [self.fetchedAssets objectsAtIndexes:indexSet];
+  }
+
+  return result;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
