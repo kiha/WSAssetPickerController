@@ -46,8 +46,8 @@
 {
     [super viewWillAppear:animated];
     
-    self.wantsFullScreenLayout = YES;
-    
+//    self.wantsFullScreenLayout = YES;
+
     // Setup the toolbar if there are items in the navigationController's toolbarItems.
     if (self.navigationController.toolbarItems.count > 0) {
         self.toolbarItems = self.navigationController.toolbarItems;
