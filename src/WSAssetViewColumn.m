@@ -64,10 +64,10 @@
   if (hours > 0)
   {
     if (negative) { [text appendString:@"-"]; negative = NO; }
-    [text appendFormat:@"%d:", hours];
+    [text appendFormat:@"%ld:", (long)hours];
   }
   if (negative) { [text appendString:@"-"]; negative = NO; }
-  [text appendFormat:@"%d:%02d", minutes, seconds];
+  [text appendFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
   
   return (NSString *)text;
 }
