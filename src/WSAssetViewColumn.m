@@ -66,7 +66,7 @@
     if (negative) { [text appendString:@"-"]; negative = NO; }
     [text appendFormat:@"%ld:", (long)hours];
   }
-  if (negative) { [text appendString:@"-"]; negative = NO; }
+  if (negative) { [text appendString:@"-"]; /* negative = NO; */ }
   [text appendFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
   
   return (NSString *)text;
